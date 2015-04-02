@@ -1,19 +1,5 @@
-# -*- coding: utf-8 -*-
+''' This program will give you a search and download function within Wallhaven '''
 """
-Created on Sun Feb  8 16:25:57 2015
-
-@author: andrew
-"""
-
-#!/usr/bin/env python2
-
-
-"""
-
-Original program from reddit
-
-#!/usr/bin/env python2
-
 import Tkinter
 
 #PATH = '/home/mohamed/wallpapers'
