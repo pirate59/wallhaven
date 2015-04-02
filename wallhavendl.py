@@ -7,6 +7,75 @@ Created on Sun Feb  8 16:25:57 2015
 
 #!/usr/bin/env python2
 
+
+"""
+
+Original program from reddit
+
+#!/usr/bin/env python2
+
+import Tkinter
+
+#PATH = '/home/mohamed/wallpapers'
+#PAGES = 5
+
+def screenRes() :
+	return { 'height' : Tkinter.Tk().winfo_screenheight(),
+	         'width' : Tkinter.Tk().winfo_screenwidth() }
+
+def save(url, filename) :
+	import urllib
+	from os import path
+	sv = path.join(pt.get(), filename + '.' + 'jpg')
+	urllib.urlretrieve(url, sv)
+
+def crawl(height, width, page) :
+	import urllib2
+	from bs4 import BeautifulSoup
+	import re
+	url = 'http://alpha.wallhaven.cc/search?categories=111&purity=100&resolutions=%sx%s&sorting=random&order=desc&page=%s' % (width, height, page)
+	#print url
+	html = urllib2.urlopen(url)
+	soup = BeautifulSoup(html, 'html')
+	ss = soup.findAll('a', {'class' : 'preview' })
+	for s in ss :
+		filename = re.search(r'\d+', s['href']).group(0)
+		url = 'http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-%s.jpg' % filename
+		#print url
+		save(url, filename)
+
+def doit() :
+	for i in range(1, int(pg.get())+1) :
+		dic = screenRes()
+		crawl(dic['height'], dic['width'], i)
+
+root = Tkinter.Tk()
+root.wm_title('randomWall')
+
+Tkinter.Label(root, text="PATH").grid(row=0)
+pt = Tkinter.Entry(root)
+pt.insert(0, '/home/mohamed/wallpapers')
+pt.grid(row=0, column=1)
+
+Tkinter.Label(root, text="PAGES").grid(row=1)
+pg = Tkinter.Entry(root)
+pg.grid(row=1, column=1)
+
+Tkinter.Button(root, text='GO !', command=doit).grid(row=3, columnspan=2)
+root.mainloop()
+
+"""
+
+
+
+
+
+
+
+
+
+
+
 import Tkinter
 
 tracker = 0
@@ -16,11 +85,19 @@ def screenRes() :
 #	         'width' : Tkinter.Tk().winfo_screenwidth() }
 
 def save(url, filename) :
-	import urllib
-	from os import path
-	sv = path.join(pt.get(), filename + '.' + 'jpg')
-	urllib.urlretrieve(url, sv)
-
+    import urllib
+    print 'imported'    
+    from os import path
+    sv = path.join(pt.get(), filename + '.' + 'jpg')
+    print 'sv = '+  sv    
+    urllib.urlretrieve(url ,sv)
+#    print 'x = ' + x
+#    out = open(filename,'r+')
+#    print 'out writing'    
+#    out.write(x.read())
+#    print 'out written'
+#    out.close()
+#    print 'completed'
 def crawl(height, width, page, z) :
     global tracker	
     import urllib2
@@ -33,19 +110,24 @@ def crawl(height, width, page, z) :
         url = 'http://alpha.wallhaven.cc/search?q=%s&categories=101&purity=111&sorting=relevance&order=desc&page=%s' % (z, page)
 #	print url
     html = urllib2.urlopen(url)
+    print html    
     soup = BeautifulSoup(html, 'html')
+    print soup
     ss = soup.findAll('a', {'class' : 'preview' })
     for s in ss :
         filename = re.search(r'\d+', s['href']).group(0)
         url = 'http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-%s.jpg' % filename
-#            print url 		
+        print url 		
         tracker += 1        
+        print tracker        
         clabel.config(text = url)
         tracked.config(text ="Total Downloaded = %s" % str(tracker))
         
                     
         root.update()
+        print 'saving file'
         save(url, filename)
+        print 'saved'
 
 def doit() :
    global tracker 
